@@ -60,7 +60,7 @@
 	{
 		global $CONFIG;
 		
-		if (($object) && ($object->subtype == get_subtype_id('object', 'api_key')))
+		if (($object) && ($object->subtype === get_subtype_id('object', 'api_key')))
 		{
 			// Delete 
 			return remove_api_user($CONFIG->site_id, $object->public);
