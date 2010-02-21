@@ -2,7 +2,6 @@
 	global $CONFIG;
 	
 	admin_gatekeeper();
-	action_gatekeeper();
 	
 	$ref = get_input('ref');
 	

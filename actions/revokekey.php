@@ -3,7 +3,6 @@
 	global $CONFIG;
 	
 	admin_gatekeeper();
-	action_gatekeeper();
 	
 	$key = (int)get_input('keyid');
 	
