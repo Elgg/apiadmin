@@ -1,4 +1,5 @@
 <?php
+
 $ref_label = elgg_echo('apiadmin:yourref');
 $ref_control = elgg_view('input/text', array('internalname' => 'ref'));
 $gen_control = elgg_view('input/submit', array('value' => elgg_echo('apiadmin:generate')));
