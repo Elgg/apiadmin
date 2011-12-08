@@ -10,7 +10,7 @@
 
 $english = array(
 
-	'apiadmin' => 'API Administration',
+	'admin:administer_utilities:apiadmin' => 'Web services API',
 
 	'apiadmin:keyrevoked' => 'API Key revoked',
 	'apiadmin:keynotrevoked' => 'API Key could not be revoked',
