@@ -24,7 +24,7 @@ function apiadmin_init() {
 	// Register some actions
 	$plugins = elgg_get_plugins_path();
 	elgg_register_action("apiadmin/revokekey", $plugins . "apiadmin/actions/revokekey.php", 'admin');
-	elgg_register_action("apiadmin/generate", $plugins . "apiadmin/actions/generate.php", 'admiin');
+	elgg_register_action("apiadmin/generate", $plugins . "apiadmin/actions/generate.php", 'admin');
 }
 
 function apiadmin_delete_key($event, $object_type, $object = null) {
