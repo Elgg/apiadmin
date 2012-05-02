@@ -15,7 +15,7 @@
 		 * Menu items and titles
 		 */
 	
-			'apiadmin' => 'API Administration',
+			'admin:apiadmin' => 'API Administration',
 	
 	
 			'apiadmin:keyrevoked' => 'API Key revoked',

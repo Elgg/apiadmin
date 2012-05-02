@@ -7,6 +7,11 @@
 	 * @author Curverider Ltd
 	 * @copyright Curverider Ltd 2008-2010
 	 * @link http://elgg.com/
+	 * 
+	 * Upgraded to Elgg 1.8.4
+	 * @author Federico Mestrone
+	 * @copyright Moodsdesign Ltd 2012
+	 * @link http://www.moodsdesign.com
 	 */
 
 	/**
@@ -21,11 +26,11 @@
 		global $CONFIG;
 		
 		// Register a page handler, so we can have nice URLs
-		register_page_handler('apiadmin','apiadmin_page_handler');
+		elgg_register_page_handler('apiadmin','apiadmin_page_handler');
 		
 		// Register some actions
-		register_action("apiadmin/revokekey",false, $CONFIG->pluginspath . "apiadmin/actions/revokekey.php", true);
-		register_action("apiadmin/generate",false, $CONFIG->pluginspath . "apiadmin/actions/generate.php", true);
+		elgg_register_action("apiadmin/revokekey", $CONFIG->pluginspath . "apiadmin/actions/revokekey.php", 'admin');
+		elgg_register_action("apiadmin/generate", $CONFIG->pluginspath . "apiadmin/actions/generate.php", 'admin');
 	}
 	
 	/**
@@ -34,10 +39,16 @@
 	 */
 	function apiadmin_pagesetup()
 	{
-		if (get_context() == 'admin' && isadminloggedin()) {
+		if ( elgg_get_context() == 'admin' && elgg_is_admin_logged_in() ) {
 			global $CONFIG;
-			add_submenu_item(elgg_echo('apiadmin'), $CONFIG->wwwroot . 'pg/apiadmin/');
-		}
+			elgg_register_menu_item('page', array(
+				'name' => elgg_echo('admin:apiadmin'),
+				'href' => 'apiadmin',
+				'text' => elgg_echo('admin:apiadmin'),
+				'context' => 'admin',
+				'priority' => 999999,
+				'section' => 'administer'
+			));
 	}
 	
 	
@@ -49,11 +60,17 @@
 		{
 			switch ($page[0])
 			{
-				default : include($CONFIG->pluginspath . "apiadmin/index.php"); 
+  				case "generate":
+ 				  include($CONFIG->pluginspath . "apiadmin/actions/generate.php"); 
+ 				  break;
+  				case "revokekey":
+				  include($CONFIG->pluginspath . "apiadmin/actions/revokekey.php"); 
+ 				  break;
+				default : //include($CONFIG->pluginspath . "apiadmin/index.php"); 
 			}
 		}
-		else
-			include($CONFIG->pluginspath . "apiadmin/index.php"); 
+		
+		include($CONFIG->pluginspath . "apiadmin/index.php"); 
 	}
 	
 	function apiadmin_delete_key($event, $object_type, $object = null)
@@ -71,9 +88,9 @@
 	
 	
 	// Make sure test_init is called on initialisation
-	register_elgg_event_handler('init','system','apiadmin_init');
-	register_elgg_event_handler('pagesetup','system','apiadmin_pagesetup');
+	elgg_register_event_handler('init','system','apiadmin_init');
+	elgg_register_event_handler('pagesetup','system','apiadmin_pagesetup');
 	
 	// Hook into delete to revoke secret keys
-	register_elgg_event_handler('delete','object','apiadmin_delete_key');
+	elgg_register_event_handler('delete','object','apiadmin_delete_key');
 ?>
