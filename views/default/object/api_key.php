@@ -1,14 +1,13 @@
 <?php
-
 global $CONFIG;
 
 $entity = $vars['entity'];
 
 $icon = elgg_view('graphics/icon', array(
-	'entity' => $entity,
-	'size' => 'small',
-));
-
+		'entity' => $entity,
+		'size' => 'small',
+	)
+);
 
 $public_label = elgg_echo('apiadmin:public');
 $private_label = elgg_echo('apiadmin:private');
@@ -17,17 +16,18 @@ $revoke_label = elgg_echo('apiadmin:revoke');
 $ts = time();
 $token = generate_action_token($ts);
 
-// @todo inject the token some cleaner way
-
-$info = "<div class=\"contentWrapper\"><p><b>{$entity->title}</b> <a href=\"{$CONFIG->url}action/apiadmin/revokekey?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts\">$revoke_label</a></p></div>";
+$info  = "<div class=\"contentWrapper\">";
+$info .= "<p><b>{$entity->title}</b> ";
+$info .= "<a href=\"{$CONFIG->url}apiadmin/revokekey?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts\">$revoke_label</a>";
+$info .= "</p></div>";
 $info .= "<div><p><b>$public_label:</b> {$entity->public}<br />";
-if (elgg_is_admin_logged_in()) {
+
+if ( elgg_is_admin_logged_in() ) {
 	// Only show secret portion to admins
 	// Fetch key
 	$keypair = get_api_user($CONFIG->site_id, $entity->public);
-
-	$info .= "<b>$private_label:</b> {$keypair->secret}";
+	$info .= "<b>$private_label:</b> {$keypair->secret}"; 
 }
 $info .= "</p></div>";
 
-echo elgg_view('page/components/image_block', array('image' => $icon, 'body' => $info));
+echo elgg_view_image_block($icon, $info);
