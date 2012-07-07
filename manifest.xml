@@ -6,8 +6,8 @@
 	<category>development</category>
 	<category>admin</category>
 	<description>A UI to manage Web Service API keys.</description>
-	<website>http://www.moodsdesign.com/</website>
-	<copyright>See COPYRIGHT.txt</copyright>
+	<website>http://www.elgg.org/</website>
+	<copyright>Curverider Ltd 2011 and Moodsdesign Ltd 2012</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
