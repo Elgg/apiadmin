@@ -11,6 +11,8 @@
  * @link http://www.elgg.org
 */
 
+elgg_register_event_handler('init','system','apiadmin_init');
+
 /**
  * Initialise the API Admin tool
  *
@@ -19,53 +21,18 @@
  * @param unknown_type $object
 */
 function apiadmin_init($event, $object_type, $object = null) {
-	global $CONFIG;
+	// Add a page to the admin area
+	elgg_register_admin_menu_item('administer', 'apiadmin', 'administer_utilities');
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('apiadmin','apiadmin_page_handler');
+	// Hook into delete to revoke secret keys
+	elgg_register_event_handler('delete', 'object', 'apiadmin_delete_key');
 
-	// Register the revoke and generate actions
-	elgg_register_action("apiadmin/revokekey", $CONFIG->pluginspath . "apiadmin/actions/revokekey.php", 'admin');
-	elgg_register_action("apiadmin/generate", $CONFIG->pluginspath . "apiadmin/actions/generate.php", 'admin');
-}
-
-/**
- * Page setup. Adds admin controls to the admin panel.	
- *
- */
-function apiadmin_pagesetup() {
-	if ( elgg_get_context() == 'admin' && elgg_is_admin_logged_in() ) {
-		elgg_register_menu_item('page', array(
-			'name' => elgg_echo('admin:apiadmin'),
-			'href' => 'apiadmin',
-			'text' => elgg_echo('admin:apiadmin'),
-			'context' => 'admin',
-			'priority' => 999999,
-			'section' => 'administer'
-			)
-		);
-	}
-}
-
-/*
- * Manages sections in the apiadmin page handler
- */
-function apiadmin_page_handler($page) {
-	global $CONFIG;
-
-	if ( $page[0] ) {
-		switch ( $page[0] ) {
-			case "generate":
-				include($CONFIG->pluginspath . "apiadmin/actions/generate.php"); 
-				break;
-			case "revokekey":
-				include($CONFIG->pluginspath . "apiadmin/actions/revokekey.php"); 
-				break;
-			default : //include($CONFIG->pluginspath . "apiadmin/index.php"); 
-		}
-	}
-
-	include($CONFIG->pluginspath . "apiadmin/pages/apiadmin/index.php"); 
+	// Register some actions
+	$plugins = elgg_get_plugins_path();
+	elgg_register_action('apiadmin/revokekey', $plugins . 'apiadmin/actions/revokekey.php', 'admin');
+	elgg_register_action('apiadmin/generate', $plugins . 'apiadmin/actions/generate.php', 'admin');
+	elgg_register_action('apiadmin/renamekey', $plugins . 'apiadmin/actions/renamekey.php', 'admin');
+	elgg_register_action('apiadmin/regenerate', $plugins . 'apiadmin/actions/regenerate.php', 'admin');
 }
 
 /*
@@ -81,11 +48,3 @@ function apiadmin_delete_key($event, $object_type, $object = null) {
 
 	return true;
 }
-
-// Make sure apiadmin_init is called on initialisation
-elgg_register_event_handler('init','system','apiadmin_init');
-elgg_register_event_handler('pagesetup','system','apiadmin_pagesetup');
-
-// Hook into delete to revoke secret keys
-elgg_register_event_handler('delete','object','apiadmin_delete_key');
-
