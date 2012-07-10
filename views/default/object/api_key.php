@@ -69,4 +69,4 @@ if ( elgg_is_admin_logged_in() ) {
 }
 $info .= "</p></div>";
 
-echo elgg_view_listing($icon, $info);
+echo elgg_view_image_block($icon, $info);
