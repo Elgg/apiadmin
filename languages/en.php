@@ -1,12 +1,12 @@
 <?php
 /**
  * Elgg API Admin
+ * English text for the API Admin plug-in
  * 
  * @package ElggAPIAdmin
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * 
- * Upgraded to Elgg 1.8 (tested on 1.8.6)
- * @author Federico Mestrone
+ * @author Curverider Ltd and Moodsdesign Ltd
  * @copyright Curverider Ltd 2011 and Moodsdesign Ltd 2012
  * @link http://www.elgg.org
 */

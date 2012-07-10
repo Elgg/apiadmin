@@ -1,20 +1,20 @@
 <?php
 /**
  * Elgg API Admin
+ * Upgraded to Elgg 1.8 (tested on 1.8.6) and added rename and regenerate actions
  * 
  * @package ElggAPIAdmin
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * 
- * Upgraded to Elgg 1.8 (tested on 1.8.6)
- * @author Federico Mestrone
- * @copyright Curverider Ltd 2011 and Moodsdesign Ltd 2012
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2011
  * @link http://www.elgg.org
 */
 
 elgg_register_event_handler('init','system','apiadmin_init');
 
 /**
- * Initialise the API Admin tool
+ * Initialise the API Admin tool on init,system
  *
  * @param unknown_type $event
  * @param unknown_type $object_type
@@ -35,8 +35,12 @@ function apiadmin_init($event, $object_type, $object = null) {
 	elgg_register_action('apiadmin/regenerate', $plugins . 'apiadmin/actions/regenerate.php', 'admin');
 }
 
-/*
+/**
  * Event handler for when an API key is deleted
+ * 
+ * @param unknown_type $event
+ * @param unknown_type $object_type
+ * @param unknown_type $object
  */
 function apiadmin_delete_key($event, $object_type, $object = null) {
 	global $CONFIG;

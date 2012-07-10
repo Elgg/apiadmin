@@ -1,4 +1,17 @@
 <?php
+/**
+ * Elgg API Admin
+ * Implementation of a view for the "API Key" object type.
+ * July 2012 : added javascript confirmation for revoke operation and added regeneration and rename operations
+ * 
+ * @package ElggAPIAdmin
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * 
+ * @author Curverider Ltd and Moodsdesign Ltd
+ * @copyright Curverider Ltd 2011 and Moodsdesign Ltd 2012
+ * @link http://www.elgg.org
+*/
+
 global $CONFIG;
 
 $entity = $vars['entity'];

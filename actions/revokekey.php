@@ -1,4 +1,15 @@
 <?php
+/**
+ * Elgg API Admin
+ * Implementation of the Revoke Keys option on an API Key object
+ * 
+ * @package ElggAPIAdmin
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * 
+ * @author Curverider Ltd
+ * @copyright Curverider Ltd 2011
+ * @link http://www.elgg.org
+*/
 
 admin_gatekeeper();
 
