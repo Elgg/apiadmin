@@ -24,19 +24,19 @@ $token = generate_action_token($ts);
 		if ( confirm(elgg.echo('apiadmin:revoke_prompt')) ) {
 			document.location.href = '<?php echo "{$CONFIG->url}action/apiadmin/revokekey?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts" ?>';
 		}
-	};
+	}
 	elgg.apiadmin_rename<?php echo $entity->guid; ?> = function() {
 		var newRef = prompt(elgg.echo('apiadmin:rename_prompt'), '<?php echo $entity->title; ?>');
 		if ( newRef ) {
 			var url = '<?php echo "{$CONFIG->url}action/apiadmin/renamekey?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts" ?>';
 			document.location.href = url + '&newref=' + encodeURIComponent(newRef);
 		}
-	};
+	}
 	elgg.apiadmin_regen<?php echo $entity->guid; ?> = function() {
 		if ( confirm(elgg.echo('apiadmin:regenerate_prompt')) ) {
 			document.location.href = '<?php echo "{$CONFIG->url}action/apiadmin/regenerate?keyid={$entity->guid}&__elgg_token=$token&__elgg_ts=$ts" ?>';
 		}
-	};
+	}
 </script>
 <?php
 $icon = elgg_view(
