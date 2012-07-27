@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg API Admin
- * Upgraded to Elgg 1.8 (tested on 1.8.6) and added rename and regenerate actions
+ * Upgraded to Elgg 1.8 (tested on 1.8.8) and added rename and regenerate actions
  * 
  * @package ElggAPIAdmin
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -28,11 +28,11 @@ function apiadmin_init($event, $object_type, $object = null) {
 	elgg_register_event_handler('delete', 'object', 'apiadmin_delete_key');
 
 	// Register some actions
-	$plugins = elgg_get_plugins_path();
-	elgg_register_action('apiadmin/revokekey', $plugins . 'apiadmin/actions/revokekey.php', 'admin');
-	elgg_register_action('apiadmin/generate', $plugins . 'apiadmin/actions/generate.php', 'admin');
-	elgg_register_action('apiadmin/renamekey', $plugins . 'apiadmin/actions/renamekey.php', 'admin');
-	elgg_register_action('apiadmin/regenerate', $plugins . 'apiadmin/actions/regenerate.php', 'admin');
+	$plugindir = dirname(__FILE__);
+	elgg_register_action('apiadmin/revokekey', $plugindir . '/actions/apiadmin/revokekey.php', 'admin');
+	elgg_register_action('apiadmin/generate', $plugindir . '/actions/apiadmin/generate.php', 'admin');
+	elgg_register_action('apiadmin/renamekey', $plugindir . '/actions/apiadmin/renamekey.php', 'admin');
+	elgg_register_action('apiadmin/regenerate', $plugindir . '/actions/apiadmin/regenerate.php', 'admin');
 }
 
 /**

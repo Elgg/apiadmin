@@ -12,7 +12,7 @@
 */
 
 // Display add form
-echo elgg_view('apiadmin/forms/add_key');
+echo elgg_view_form('apiadmin/generate');
 
 // Display all current API keys
 echo elgg_list_entities(array(
