@@ -37,6 +37,8 @@ $english = array(
 	'apiadmin:public' => 'Public',
 	'apiadmin:private' => 'Private',
 
+    'apiadmin:settings:enable_stats' => 'Enable API Key stats collection',
+
 	'item:object:api_key' => 'API Keys'
 );
 

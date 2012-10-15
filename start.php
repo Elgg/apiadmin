@@ -33,6 +33,9 @@ function apiadmin_init($event, $object_type, $object = null) {
 	elgg_register_action('apiadmin/generate', $plugindir . '/actions/apiadmin/generate.php', 'admin');
 	elgg_register_action('apiadmin/renamekey', $plugindir . '/actions/apiadmin/renamekey.php', 'admin');
 	elgg_register_action('apiadmin/regenerate', $plugindir . '/actions/apiadmin/regenerate.php', 'admin');
+
+    // Register hook for 'api_key', 'use' for stats purposes
+    elgg_register_plugin_hook_handler('api_key', 'use', 'apiadmin_apikey_use');
 }
 
 /**
@@ -51,4 +54,10 @@ function apiadmin_delete_key($event, $object_type, $object = null) {
 	}
 
 	return true;
+}
+
+function apiadmin_apikey_use($hook, $type, $returnvalue, $params) {
+    if ( elgg_get_plugin_setting('enable_stats', 'apiadmin') == 'on' ) {
+        error_log("API Key Usage: $hook, $type, $returnvalue, $params");
+    }
 }
