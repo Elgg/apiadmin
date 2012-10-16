@@ -22,10 +22,10 @@ $list = elgg_list_entities(array(
 ));
 
 if ( $list ) {
-    $stats_label = elgg_echo('apiadmin:stats:all');
-    echo "<p><a href=\"{$CONFIG->url}admin/administer_utilities/apistats\">$stats_label</a></p>";
     echo $list;
+    $stats_label = elgg_echo('apiadmin:stats:all');
+    echo "<p><a href=\"{$CONFIG->url}action/apiadmin/viewstats\">$stats_label</a></p>";
 } else {
-    $nokeys_label = elgg_echo('apiadmin:nokeys');
+
     echo "<p>$nokeys_label</p>";
 }

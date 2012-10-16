@@ -13,6 +13,7 @@
 
 $english = array(
 	'admin:administer_utilities:apiadmin' => 'API Key Admin',
+    'admin:administer_utilities:apistats' => 'API Key Stats',
 
 	'apiadmin:refrenamed' => 'API Reference changed',
 	'apiadmin:refnotrenamed' => 'API Reference could not be changed',
@@ -29,15 +30,19 @@ $english = array(
 	'apiadmin:rename_prompt' => 'Enter your new reference for the key:',
 	'apiadmin:revoke_prompt' => 'Are you sure you want to revoke these keys?',
 	'apiadmin:regenerate_prompt' => 'Are you sure you want to regenerate these keys?',
+    'apiadmin:stats:all' => 'View stats for all keys',
+    'apiadmin:nokeys' => 'There are no registered api keys at the moment.',
 	
 	'apiadmin:revoke' => 'Revoke keys',
 	'apiadmin:rename' => 'Change reference',
 	'apiadmin:regenerate' => 'Regenerate keys',
-	
+    'apiadmin:stats' => 'View stats',
+
 	'apiadmin:public' => 'Public',
 	'apiadmin:private' => 'Private',
 
     'apiadmin:settings:enable_stats' => 'Enable API Key stats collection',
+    'apiadmin:settings:keep_tables' => 'Do not drop stats DB tables when deactivating the plugin',
 
 	'item:object:api_key' => 'API Keys'
 );

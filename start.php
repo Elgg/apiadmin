@@ -23,6 +23,7 @@ elgg_register_event_handler('init','system','apiadmin_init');
 function apiadmin_init($event, $object_type, $object = null) {
 	// Add a page to the admin area
 	elgg_register_admin_menu_item('administer', 'apiadmin', 'administer_utilities');
+    elgg_register_admin_menu_item('administer', 'apistats', 'administer_utilities');
 
 	// Hook into delete to revoke secret keys
 	elgg_register_event_handler('delete', 'object', 'apiadmin_delete_key');
@@ -58,6 +59,26 @@ function apiadmin_delete_key($event, $object_type, $object = null) {
 
 function apiadmin_apikey_use($hook, $type, $returnvalue, $params) {
     if ( elgg_get_plugin_setting('enable_stats', 'apiadmin') == 'on' ) {
-        error_log("API Key Usage: $hook, $type, $returnvalue, $params");
+        global $CONFIG;
+        $handler = sanitise_string($_GET['handler']);
+        $request = sanitise_string($_GET['request']);
+        $method = sanitise_string($_GET['method']);
+        $api_key = sanitise_string($params);
+        $remote_address = sanitise_string($_SERVER['REMOTE_ADDR']);
+        $user_agent = sanitise_string($_SERVER['HTTP_USER_AGENT']);
+        // `id` bigint(20) `timestamp` int(11) `api_key` varchar(40) `handler` varchar(256) `request` varchar(256) `method` varchar(256)
+        $sql = sprintf("INSERT INTO %s VALUES(NULL, %d, '%s', '%s', '%s', '%s', '%s', '%s')", $CONFIG->dbprefix . 'apiadmin_stats',
+                    time(),
+                    $api_key,
+                    $handler,
+                    $request,
+                    $method,
+                    $remote_address,
+                    $user_agent
+                );
+        $result = insert_data($sql);
+        if ( $result != 1 ) {
+            error_log("Could not save stats for $api_key ($method)");
+        }
     }
 }

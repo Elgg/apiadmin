@@ -51,12 +51,14 @@ $private_label = elgg_echo('apiadmin:private');
 $revoke_label = elgg_echo('apiadmin:revoke');
 $rename_label = elgg_echo('apiadmin:rename');
 $regenerate_label = elgg_echo('apiadmin:regenerate');
+$stats_label = elgg_echo('apiadmin:stats');
 
 $info  = "<div class=\"contentWrapper\">";
 $info .= "<p><b>{$entity->title}</b>";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_revoke{$entity->guid}();\">$revoke_label</a>]";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_rename{$entity->guid}();\">$rename_label</a>]";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_regen{$entity->guid}();\">$regenerate_label</a>]";
+$info .= " &nbsp; [<a href=\"{$CONFIG->url}admin/administer_utilities/apistats?keyid={$entity->guid}\">$stats_label</a>]";
 $info .= "</p></div>";
 $info .= "<div><p><b>$public_label:</b> {$entity->public}<br />";
 

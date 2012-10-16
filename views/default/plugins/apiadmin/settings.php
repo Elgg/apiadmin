@@ -4,11 +4,11 @@
  * 
  */
 
-// Plugin setting: should we show standin?
+// Plugin setting: should we collect API stats?
 if ( isset($vars['entity']->enable_stats) ) {
     $enable_stats = $vars['entity']->enable_stats;
 } else {
-    $enable_stats = 'on';
+    $enable_stats = '';
 }
 
 $label1 = elgg_echo('apiadmin:settings:enable_stats');
@@ -18,6 +18,28 @@ $options1 = array(
     'value' => 'on',
     'checked' => ($enable_stats == 'on')
 );
+
+// Plugin setting: should we drop stats tables on deactivate?
+if ( isset($vars['entity']->keep_tables) ) {
+    $keep_tables = $vars['entity']->keep_tables;
+} else {
+    $keep_tables = '';
+}
+
+$label2 = elgg_echo('apiadmin:settings:keep_tables');
+// Add a checkbox
+$options2 = array(
+    'name' => 'params[keep_tables]',
+    'value' => 'on',
+    'checked' => ($keep_tables == 'on')
+);
+
+// display the UI
+
 echo "<p>$label1 ";
 echo elgg_view('input/checkbox', $options1);
+echo '</p>';
+
+echo "<p>$label2 ";
+echo elgg_view('input/checkbox', $options2);
 echo '</p>';
