@@ -51,23 +51,21 @@ $private_label = elgg_echo('apiadmin:private');
 $revoke_label = elgg_echo('apiadmin:revoke');
 $rename_label = elgg_echo('apiadmin:rename');
 $regenerate_label = elgg_echo('apiadmin:regenerate');
-$stats_label = elgg_echo('apiadmin:stats');
+$log_label = elgg_echo('apiadmin:log');
 
 $info  = "<div class=\"contentWrapper\">";
 $info .= "<p><b>{$entity->title}</b>";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_revoke{$entity->guid}();\">$revoke_label</a>]";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_rename{$entity->guid}();\">$rename_label</a>]";
 $info .= " &nbsp; [<a href=\"#\" onclick=\"elgg.apiadmin_regen{$entity->guid}();\">$regenerate_label</a>]";
-$info .= " &nbsp; [<a href=\"{$CONFIG->url}admin/administer_utilities/apistats?keyid={$entity->guid}\">$stats_label</a>]";
+//$info .= " &nbsp; [<a href=\"{$CONFIG->url}admin/statistics/apilog?keyid={$entity->guid}\">$log_label</a>]";
 $info .= "</p></div>";
 $info .= "<div><p><b>$public_label:</b> {$entity->public}<br />";
-
 // Only show secret portion to admins
 if ( elgg_is_admin_logged_in() ) {
-	// Fetch key
+	// Fetch key and show it
 	$keypair = get_api_user($CONFIG->site_id, $entity->public);
-
-	$info .= "<b>$private_label:</b> {$keypair->secret}"; 
+	$info .= "<b>$private_label:</b> {$keypair->secret}";
 }
 $info .= "</p></div>";
 

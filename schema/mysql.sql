@@ -16,14 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `prefix_apiadmin_stats`
+-- Table structure for table `prefix_apiadmin_log`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `prefix_apiadmin_stats` (
+CREATE TABLE IF NOT EXISTS `prefix_apiadmin_log` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `timestamp` int(11) NOT NULL,
+  `time_created` int(11) NOT NULL,
   `api_key` varchar(40) DEFAULT NULL,
   `handler` varchar(256) NOT NULL,
   `request` varchar(256) NOT NULL,

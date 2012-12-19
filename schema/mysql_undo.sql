@@ -16,12 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `prefix_apiadmin_stats`
+-- Table structure for table `prefix_apiadmin_log`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE IF EXISTS `prefix_apiadmin_stats`;
+DROP TABLE IF EXISTS `prefix_apiadmin_log`;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
