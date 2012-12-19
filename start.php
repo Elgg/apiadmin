@@ -82,6 +82,7 @@ function apiadmin_apikey_use($hook, $type, $returnvalue, $params) {
     if ( $result != 1 ) {
         error_log("Could not save stats for $api_key ($method)");
     }
+    return $returnvalue;
 }
 
 /**
