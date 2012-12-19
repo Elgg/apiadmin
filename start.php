@@ -1,5 +1,19 @@
 <?php
 /**
+ * Enhanced API Admin
+ * A plugin to manage web services API keys directly from within the Elgg admin console
+ *
+ * @package ElggAPIAdmin
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ *
+ * @author Federico Mestrone
+ * @copyright Moodsdesign Ltd 2012
+ * @link http://www.moodsdesign.com
+ */
+
+/*
+ * Based upon:
+ *
  * Elgg API Admin
  * Upgraded to Elgg 1.8 (tested on 1.8.8) and added rename and regenerate actions
  * 
@@ -88,12 +102,11 @@ function apiadmin_apikey_use($hook, $type, $returnvalue, $params) {
 /**
  * Retrieve the API Access log based on a number of parameters.
  *
- * @param int|array $by_user    The guid(s) of the user(s) who initiated the event.
- *                              Use 0 for unowned entries. Anything else falsey means anyone.
- * @param string    $event      The event you are searching on.
- * @param string    $class      The class of object it effects.
- * @param string    $type       The type
- * @param string    $subtype    The subtype.
+ * @param int|array $by_key             The guid(s) of the key(s) to filter in
+ * @param string    $handler            The event you are searching on.
+ * @param string    $request            The class of object it effects.
+ * @param string    $method             The type
+ * @param string    $remote_address     The subtype.
  * @param int       $limit      Maximum number of responses to return.
  * @param int       $offset     Offset of where to start.
  * @param bool      $count      Return count or not
@@ -104,80 +117,83 @@ function apiadmin_apikey_use($hook, $type, $returnvalue, $params) {
  * @return mixed
  */
 function apiadmin_get_usage_log($by_key = '', $handler = '', $request = '', $method = '', $remote_address = '',
-                        $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0
-                        ) {
+    $limit = 10, $offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0
+  ) {
 
     global $CONFIG;
 
-    $by_user_orig = $by_user;
-    if (is_array($by_user) && sizeof($by_user) > 0) {
-        foreach ($by_user as $key => $val) {
-            $by_user[$key] = (int) $val;
-        }
-    } else {
-        $by_user = (int)$by_user;
-    }
-
-    $event = sanitise_string($event);
-    $class = sanitise_string($class);
-    $type = sanitise_string($type);
-    $subtype = sanitise_string($subtype);
-    $ip_address = sanitise_string($ip_address);
     $limit = (int)$limit;
     $offset = (int)$offset;
 
     $where = array();
 
-    if ($by_user_orig !== "" && $by_user_orig !== false && $by_user_orig !== null) {
-        if (is_int($by_user)) {
-            $where[] = "performed_by_guid=$by_user";
-        } else if (is_array($by_user)) {
-            $where [] = "performed_by_guid in (" . implode(",", $by_user) . ")";
+    /*
+        $by_user_orig = $by_user;
+        if (is_array($by_user) && sizeof($by_user) > 0) {
+            foreach ($by_user as $key => $val) {
+                $by_user[$key] = (int) $val;
+            }
+        } else {
+            $by_user = (int)$by_user;
         }
+
+        $event = sanitise_string($event);
+        $class = sanitise_string($class);
+        $type = sanitise_string($type);
+        $subtype = sanitise_string($subtype);
+        $ip_address = sanitise_string($ip_address);
+
+        if ($by_user_orig !== "" && $by_user_orig !== false && $by_user_orig !== null) {
+            if (is_int($by_user)) {
+                $where[] = "performed_by_guid=$by_user";
+            } else if (is_array($by_user)) {
+                $where [] = "performed_by_guid in (" . implode(",", $by_user) . ")";
+            }
+        }
+        if ($event != "") {
+            $where[] = "event='$event'";
+        }
+        if ($class !== "") {
+            $where[] = "object_class='$class'";
+        }
+        if ($type != "") {
+            $where[] = "object_type='$type'";
+        }
+        if ($subtype !== "") {
+            $where[] = "object_subtype='$subtype'";
+        }
+
+        if ($timebefore) {
+            $where[] = "time_created < " . ((int) $timebefore);
+        }
+        if ($timeafter) {
+            $where[] = "time_created > " . ((int) $timeafter);
+        }
+        if ($object_id) {
+            $where[] = "object_id = " . ((int) $object_id);
+        }
+        if ($ip_address) {
+            $where[] = "ip_address = '$ip_address'";
+        }
+    */
+
+    $select = '*';
+    if ( $count ) {
+        $select = 'count(*) as count';
     }
-    if ($event != "") {
-        $where[] = "event='$event'";
-    }
-    if ($class !== "") {
-        $where[] = "object_class='$class'";
-    }
-    if ($type != "") {
-        $where[] = "object_type='$type'";
-    }
-    if ($subtype !== "") {
-        $where[] = "object_subtype='$subtype'";
+    $query = "SELECT $select FROM {$CONFIG->dbprefix}apiadmin_log WHERE 1 ";
+    foreach ( $where as $w ) {
+        $query .= " AND $w";
     }
 
-    if ($timebefore) {
-        $where[] = "time_created < " . ((int) $timebefore);
-    }
-    if ($timeafter) {
-        $where[] = "time_created > " . ((int) $timeafter);
-    }
-    if ($object_id) {
-        $where[] = "object_id = " . ((int) $object_id);
-    }
-    if ($ip_address) {
-        $where[] = "ip_address = '$ip_address'";
+    if ( !$count ) {
+        $query .= ' ORDER BY time_created DESC';
+        $query .= " LIMIT $offset, $limit"; // Add order and limit
     }
 
-    $select = "*";
-    if ($count) {
-        $select = "count(*) as count";
-    }
-    $query = "SELECT $select from {$CONFIG->dbprefix}apiadmin_log where 1 ";
-    foreach ($where as $w) {
-        $query .= " and $w";
-    }
-
-    if (!$count) {
-        $query .= " order by time_created desc";
-        $query .= " limit $offset, $limit"; // Add order and limit
-    }
-
-    if ($count) {
+    if ( $count ) {
         $numrows = get_data_row($query);
-        if ($numrows) {
+        if ( $numrows ) {
             return $numrows->count;
         }
     } else {
