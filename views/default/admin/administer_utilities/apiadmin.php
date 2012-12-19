@@ -11,6 +11,10 @@
  * @link http://www.elgg.org
 */
 
+if ( !elgg_is_active_plugin('version_check') ) {
+    register_error(elgg_echo('apiadmin:no_version_check'));
+}
+
 // Display add form
 echo elgg_view_form('apiadmin/generate');
 

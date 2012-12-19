@@ -7,6 +7,10 @@
  * @package APIAdmin
  */
 
+if ( !elgg_is_active_plugin('version_check') ) {
+    register_error(elgg_echo('apiadmin:no_version_check'));
+}
+
 $limit = get_input('limit', 20);
 $offset = get_input('offset');
 

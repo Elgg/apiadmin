@@ -55,5 +55,6 @@ $english = array(
     'apiadmin:record:user_agent' => 'User Agent',
 
     'apiadmin:no_result' => 'There are no API access log entries at the moment',
+    'apiadmin:no_version_check' => 'API Admin needs the Version Check plugin to check for updates and new releases',
 );
 add_translation('en', $english);

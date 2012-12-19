@@ -54,6 +54,10 @@ function apiadmin_init($event, $object_type, $object = null) {
         // Register hook for 'api_key', 'use' for stats purposes
         elgg_register_plugin_hook_handler('api_key', 'use', 'apiadmin_apikey_use');
     }
+
+    if ( elgg_is_active_plugin('version_check') ) {
+        version_check_register_plugin('apiadmin');
+    }
 }
 
 /**

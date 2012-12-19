@@ -4,6 +4,10 @@
  * 
  */
 
+if ( !elgg_is_active_plugin('version_check') ) {
+    register_error(elgg_echo('apiadmin:no_version_check'));
+}
+
 // Plugin setting: should we collect API stats?
 if ( isset($vars['entity']->enable_stats) ) {
     $enable_stats = $vars['entity']->enable_stats;
