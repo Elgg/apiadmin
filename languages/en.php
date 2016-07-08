@@ -30,9 +30,9 @@ $english = array(
 	'apiadmin:revoke_prompt' => 'Are you sure you want to revoke these keys?',
 	'apiadmin:regenerate_prompt' => 'Are you sure you want to regenerate these keys?',
 	
-	'apiadmin:revoke' => 'Revoke keys',
-	'apiadmin:rename' => 'Change reference',
-	'apiadmin:regenerate' => 'Regenerate keys',
+	'apiadmin:revoke' => 'Revoke',
+	'apiadmin:rename' => 'Rename',
+	'apiadmin:regenerate' => 'Regenerate',
 	
 	'apiadmin:public' => 'Public',
 	'apiadmin:private' => 'Private',
