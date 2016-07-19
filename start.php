@@ -36,19 +36,16 @@ function apiadmin_init($event, $object_type, $object = null) {
 }
 
 /**
- * Event handler for when an API key is deleted
- * 
- * @param unknown_type $event
- * @param unknown_type $object_type
- * @param unknown_type $object
+ * @param      $event
+ * @param      $object_type
+ * @param null $object
+ *
+ * @return bool
  */
 function apiadmin_delete_key($event, $object_type, $object = null) {
-	global $CONFIG;
-
-	if ( ($object) && ($object->subtype === get_subtype_id('object', 'api_key')) ) {
-		// Delete secret key
-		return remove_api_user($CONFIG->site_id, $object->public);
+	if (!elgg_instanceof($object, 'object', 'api_key')) {
+		return true;
 	}
 
-	return true;
+	return remove_api_user(elgg_get_site_entity()->getGUID(), $object->public);
 }
